@@ -1,13 +1,21 @@
 package modele;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "genre")
+@EntityListeners(AuditingEntityListener.class) // permet d'indiquer à la JPA
+//les tables à créer automatiquement quand on met la commande la et @EnableJpaAuditing
 public class Genre {
 	
 	@Id
@@ -28,7 +36,8 @@ public class Genre {
 		this.nom = nom;
 	}
 	
-	
+	@OneToMany(mappedBy = "genre")
+	Set<Serie> listeserie;
 	
 
 }

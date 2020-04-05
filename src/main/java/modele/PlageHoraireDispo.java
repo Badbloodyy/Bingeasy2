@@ -1,6 +1,7 @@
 package modele;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,8 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Table(name = "plageHoraire")
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@Table(name = "plagehorairedispo")
 @Entity
+@EntityListeners(AuditingEntityListener.class) // permet d'indiquer à la JPA
+//les tables à créer automatiquement quand on met la commande la et @EnableJpaAuditing
 public class PlageHoraireDispo {
 
 	@Id
@@ -39,7 +44,6 @@ public class PlageHoraireDispo {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_utilisateur")
-	
 	private Utilisateur utilisateur;
 	
 

@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -109,8 +110,8 @@ public class ConfigSecurite extends WebSecurityConfigurerAdapter
 		.and().httpBasic()
 		.and().authorizeRequests()
         .antMatchers("/admin/**").hasRole("ADMIN")  // ** signifie "n'importe quoi derriere". On pourra garder toute cette partie la pour la suite
-        .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // lorsqu'on passera par jdbc.
-        .antMatchers("/authentification").permitAll() // La partie /admin/xx est accessible par le role admin, /user/xx par un user et un admin, / par le reste.
+        .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // lorsqu'on passera par jdbc. Le ** dit que toute les sous adresse de user necessiterons ce rôle
+        .antMatchers("/authentification", "/inscription", "/hello").permitAll() // La partie /admin/xx est accessible par le role admin, /user/xx par un user et un admin, / par le reste.
         // .and()
         // .formLogin(); 
         // login accessible par tout le monde. On l'enleve pour ne plus avoir le login.
@@ -127,9 +128,12 @@ public class ConfigSecurite extends WebSecurityConfigurerAdapter
 	@SuppressWarnings("deprecation")
 	@Bean   
 	 public PasswordEncoder getPasswordEncoder(){
-		 return NoOpPasswordEncoder.getInstance();   // N'est pas vraiment déprécié en fait. Ca sert a dire a spring qu'on a un mdp en clair.
+		 // return NoOpPasswordEncoder.getInstance();   // N'est pas vraiment déprécié en fait. Ca sert a dire a spring qu'on a un mdp en clair.
 		 // On dit qu'un truc est deprecated car on va bientot l'enlever mais ici c'est utilisé pour dire qu'il faut pas l'utiliser.
-		 } 
+		return new BCryptPasswordEncoder(); // Cette méthode surcharge notre bean. A chaque fois qu'on recupere un mdp de
+		// l'user, on va l'encrypter. Si on nous donne root, bcrypt va l'encrypter et le comparer avec ce qu'il y a dans la
+		// base de donnée. Le soucis c'est que les mdp dans la db sont non crypté donc va falloir les crypter aussi.
+	} 
 	
 	@Bean
     @Override

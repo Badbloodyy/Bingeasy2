@@ -29,8 +29,9 @@ public class PlageHoraireDispo {
 	@JsonView({MyJsonView.Utilisateur.class, MyJsonView.PlageHoraireDispo.class})
 	private int dureeplage;
 	
+	// Modifier en Date le int, avec @Temporal(TemporalType.TIMESTAMP) au dessus.
 	@JsonView({MyJsonView.Utilisateur.class, MyJsonView.PlageHoraireDispo.class})
-	private int heuredebut;
+	private int heuredebut; // changer pour faire en sorte que ça sache quelle heure et quelle date. La c'est juste un int, c'est pas précis.
 	
 	public Integer getId() {
 		return id;

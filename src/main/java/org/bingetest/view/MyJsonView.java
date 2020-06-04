@@ -13,6 +13,7 @@ public static class EvalSerie{};
 public static class EvalSerieDB extends EvalEpisode{};
 public static class Utilisateur{};
 public static class UtilisateurDB extends Utilisateur{};
+public static class UtilisateurComplet extends UtilisateurDB{};
 public static class PlageHoraireDispo{};
 public static class PlageHoraireDispoDB extends PlageHoraireDispo{};
 public static class Role{};

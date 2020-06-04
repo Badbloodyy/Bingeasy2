@@ -44,16 +44,24 @@ public class Utilisateur {
 	private String login;
 	
 	// @JsonIgnore
+	@JsonView(MyJsonView.UtilisateurComplet.class)
 	@Column(nullable = false)
 	private String motdepasse;
 	
+	@JsonView(MyJsonView.UtilisateurComplet.class)
 	private boolean actif;
 	
-	
+	private String nomImageAvatar;
 	
 	//@Temporal(TemporalType.TIMESTAMP)
 	//private Date datecreationcompte;
 	
+	public String getNomImageAvatar() {
+		return nomImageAvatar;
+	}
+	public void setNomImageAvatar(String nomImageAvatar) {
+		this.nomImageAvatar = nomImageAvatar;
+	}
 	public boolean isActif() {
 		return actif;
 	}
@@ -78,6 +86,8 @@ public class Utilisateur {
 	public void setMotdepasse(String motdepasse) {
 		this.motdepasse = motdepasse;
 	}
+	
+	
 	
 	@OneToMany(mappedBy="utilisateur")
 	@JsonView(MyJsonView.UtilisateurDB.class)

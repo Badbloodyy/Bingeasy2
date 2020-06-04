@@ -1,5 +1,6 @@
 package org.bingetest.controleur;
 
+import org.bingetest.modele.Utilisateur;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,9 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class HelloControleur {
 	
-	 @GetMapping("/")   
-	 public String resourcePourToutLeMonde() {
-		 return "Hello buddy";   
+	 @GetMapping("/hello")   
+	 public Utilisateur resourcePourToutLeMonde() {
+		 Utilisateur hellocmoi = new Utilisateur(); 
+		 hellocmoi.setId(1);
+		 hellocmoi.setLogin("MobileGundam");
+		 hellocmoi.setActif(true);
+		 hellocmoi.setMotdepasse("123456");
+		 return hellocmoi;
+		  
 		 }
 	 @GetMapping("/user/hello")   
 	 public String resourcePourUtilisateur() {
@@ -18,7 +25,7 @@ public class HelloControleur {
 		   }
 	 @GetMapping("/admin/hello")   
 	 public String resourcePourAdministrateur() {
-		 return "Hello admin";   
+		 return "Hello admin";  
 		   }
 
 }
